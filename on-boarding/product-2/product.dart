@@ -24,7 +24,7 @@ void main(){
             stdout.write('please enter the product price: ');
             var price= getPriceFromUser();
 
-            if(name!=null && desc!=null && price!=null){
+            if(name!=null && desc!=null){
             productManager.addProduct(name,desc,price);
             print("successfully created");
             }else{
@@ -76,7 +76,6 @@ void main(){
 
 }
 
-
 int getPriceFromUser() {
   var flag=true;
   while (flag) {
@@ -91,19 +90,35 @@ int getPriceFromUser() {
 }
 
 class Product{
-    String ? name;
-    String ? description;
-    int ? price;
+    String _name;
+    String  _description;
+    int  _price;
 
-    Product(String name, description, int price){
-      this.name= name;
-      this.description= description;
-      this.price= price;
+    Product(this._name, this._description, this._price);
+    Product get getProduct{
+      return this;
+    }
+    String get name => _name;
+    String get description => _description;
+    int get price => _price;
+
+    set setName(String new_name){
+          _name= new_name;
+        
+    }
+
+    set setDescription(String new_description){
+          _description= new_description;
+        
+ }
+
+    set setPrice (int new_price){
+          _price= new_price;
     }
 
     @override
     String toString(){
-      return 'name: $name, description: $description, price: $price';
+      return 'name: $_name, description: $_description, price: $_price';
     }
 
 }
@@ -121,14 +136,19 @@ class ProductManger {
     }
 
     void viewallProducts(){
-       print(products);
+       if(products.isEmpty){
+        print("no products");
+       }
+       for (Product pro in products){
+          print(pro.getProduct);
+        }
     }
 
     void viewProduct(product_name){
       var flag= false;
       for (Product pro in products){
-        if (pro.name==product_name){
-          print(pro);
+        if (pro._name==product_name){
+          print(pro.getProduct);
           flag= true;
           break;
         }
@@ -142,15 +162,15 @@ class ProductManger {
     void editProduct(product_name, [name, desc, price]){
                var flag=false;
                for (Product pro in products){
-                if (pro.name==product_name){
+                if (pro._name==product_name){
                   if(name!=null && name!=""){
-                  pro.name= name;
+                  pro.setName= name;
                   }
                   if (desc!=null && name!=""){
-                  pro.description= desc;
+                  pro.setDescription= desc;
                   }
                   if(price!=null && name!=""){
-                  pro.price= price;
+                  pro.setPrice= price;
                   }
                 flag=true;
                 break;
@@ -168,7 +188,7 @@ class ProductManger {
     void deleteProduct(product_name){
       var flag= false;
       for (Product product in products){
-        if (product_name== product.name){
+        if (product_name== product._name){
             products.remove(product);
             flag= true;
             print("successfully deleted");
