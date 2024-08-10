@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_task_6/home_page.dart';
+import './home_page.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -27,13 +27,13 @@ class _SearchPageState extends State<SearchPage> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                     width: double.infinity,
                     height: 190,
                     child: Image.asset(product.image,
                         fit: BoxFit.fitWidth)),
                 Padding(
-                  padding: EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(18),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -47,7 +47,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -55,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
-                              color: Color.fromARGB(255, 168, 163, 163))),
+                              color: const Color.fromARGB(255, 168, 163, 163))),
                       Row(
                         children: [
                           Image.asset('../assets/star.png',
@@ -65,7 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12,
-                                  color: Color.fromARGB(255, 168, 163, 163))),
+                                  color: const Color.fromARGB(255, 168, 163, 163))),
                         ],
                       )
                     ],
@@ -79,22 +79,22 @@ class _SearchPageState extends State<SearchPage> {
 
   bool _isvisible=false;
   RangeValues _currentRangeValue=const RangeValues(20, 80);
-
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            padding: EdgeInsets.all(30),
+            padding:const EdgeInsets.all(30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_rounded,
-                        color: const Color.fromARGB(255, 63, 81, 243),
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                        color:  Color.fromARGB(255, 63, 81, 243),
                         size: 20),
                     onPressed: () => {Navigator.pop(context)},
                   ),
-                  SizedBox(
+                 const SizedBox(
                     width: 140,
                   ),
                   Text('Search Product',
@@ -106,7 +106,7 @@ class _SearchPageState extends State<SearchPage> {
               Row(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(0),
+                      padding:  const EdgeInsets.all(0),
                       width: 388,
                       height: 43,
                       decoration: BoxDecoration(
@@ -114,7 +114,7 @@ class _SearchPageState extends State<SearchPage> {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                               width: 2,
-                              color: Color.fromARGB(255, 216, 213, 213))),
+                              color: const Color.fromARGB(255, 216, 213, 213))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -125,19 +125,19 @@ class _SearchPageState extends State<SearchPage> {
                                 hintText: 'Leather',
                                 hintStyle: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500, color:Colors.grey),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20)
+                                contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20)
                               ),
                             ),
                           ),
                           IconButton(
                               onPressed: () => {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward,
-                                color: const Color.fromARGB(255, 63, 81, 243),
+                                color: Color.fromARGB(255, 63, 81, 243),
                               ))
                         ],
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Container(
@@ -152,7 +152,7 @@ class _SearchPageState extends State<SearchPage> {
                         _isvisible=!_isvisible;
                         })
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.filter_list,
                         color: Colors.white,
                       ),
@@ -174,7 +174,7 @@ class _SearchPageState extends State<SearchPage> {
                 children: [
                   
                   Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: Text('Category',
                     style: GoogleFonts.poppins(
                         fontSize: 14, fontWeight: FontWeight.w500)),
@@ -182,22 +182,22 @@ class _SearchPageState extends State<SearchPage> {
              
               
               Container(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 width: double.infinity,
                 height: 45,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                        width: 2, color: Color.fromARGB(255, 185, 182, 182))),
+                        width: 2, color: const Color.fromARGB(255, 185, 182, 182))),
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 15),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 15),
                 child: Text('Price',
                     style: GoogleFonts.poppins(
                         fontSize: 14, fontWeight: FontWeight.w500)),
@@ -213,18 +213,18 @@ class _SearchPageState extends State<SearchPage> {
                 },min:0, max:100,activeColor:const Color.fromARGB(255, 63, 81, 243) ,),
               ),
 
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => {},
-                  child: Text('APPLY'),
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(152, 50),
+                      minimumSize: const Size(152, 50),
                       backgroundColor: const Color.fromARGB(255, 63, 81, 243),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
+                           child: const Text('APPLY'),
                 ),
               ),
                 ],
