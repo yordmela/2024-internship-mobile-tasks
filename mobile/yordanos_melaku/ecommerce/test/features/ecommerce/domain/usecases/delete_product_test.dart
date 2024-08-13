@@ -21,7 +21,7 @@ void main(){
 
 
 int tProductId= 1;
- final tProduct= Product(image:'this' , name: 'Sneaker', catagory: 'mens shoes', price: 100, rating: 5.0, description: 'this is sneaker', size: [32,37,87]);
+ final tProduct= Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s');
   test('should get product from repo', ()async{
 
     

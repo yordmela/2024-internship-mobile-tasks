@@ -3,9 +3,9 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/product.dart';
 import '../repositories/product_repository.dart';
-import 'base_usecase.dart';
+import '../../../../core/usecase.dart';
 
-class GetProductById extends BaseUsecase<Product, int> {
+class GetProductById extends Usecase<Product, int> {
   final ProductRepository repository;
 
   GetProductById(this.repository);

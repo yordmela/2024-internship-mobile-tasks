@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
+import 'error/failures.dart';
 
-abstract class BaseUsecase<Type,Params>{
+abstract class Usecase<Type,Params>{
   Future <Either<Failure, Type>> execute(Params params);
 }
+
+class NoParams  {}

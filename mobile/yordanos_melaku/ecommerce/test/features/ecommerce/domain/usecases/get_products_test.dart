@@ -1,5 +1,6 @@
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_task_6/core/usecase.dart';
 import 'package:flutter_task_6/features/ecommerce/domain/entities/product.dart';
 import 'package:flutter_task_6/features/ecommerce/domain/usecases/get_products.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,8 +21,8 @@ void main(){
   });
 
   final tProductList=[
-const Product(image:'this' , name: 'Sneaker', catagory: 'mens shoes', price: 100, rating: 5.0, description: 'this is sneaker', size: [32,37,87]),
-const Product(image:'this' , name: 'Sneaker', catagory: 'mens shoes', price: 100, rating: 5.0, description: 'this is sneaker', size: [32,37,87])
+ const Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s'),
+ const Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s')
 
   ];
 
@@ -34,7 +35,7 @@ const Product(image:'this' , name: 'Sneaker', catagory: 'mens shoes', price: 100
 when(mockProductRepository.getProducts())
     .thenAnswer((_) async => Right(tProductList));
 
-final result= await usecase.execute(NoParams ());
+final result= await usecase.execute(NoParams());
 
 
 expect(result, Right(tProductList));

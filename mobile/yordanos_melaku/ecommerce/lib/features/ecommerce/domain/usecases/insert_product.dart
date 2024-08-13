@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/product.dart';
 import '../repositories/product_repository.dart';
-import 'base_usecase.dart';
+import '../../../../core/usecase.dart';
 
-class InsertProduct extends BaseUsecase <Product, Product>{
+class InsertProduct extends Usecase <Product, Product>{
   final ProductRepository repository;
   InsertProduct(this.repository);
 
