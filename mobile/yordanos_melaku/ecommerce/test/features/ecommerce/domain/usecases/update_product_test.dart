@@ -17,7 +17,7 @@ void main() {
     usecase = UpdateProduct(mockProductRepository);
   });
 
-  const tProduct = Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s');
+  const tProduct = Product(id: '1', name: 'this', price: 100, description: 'this is this', imageUrl: '../s');
 
   test('should get product from repo', () async {
     when(mockProductRepository.updateProduct(tProduct))

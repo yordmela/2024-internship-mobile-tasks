@@ -8,7 +8,7 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final tProduct = ProductModel(
-      id: 1,
+      id: '1',
       name: 'jeans',
       price: 100,
       description: 'this is jeans',
@@ -40,7 +40,7 @@ void main() {
     test('should return a valid json', () {
       final result = tProduct.toJson();
       final expectedJsonMap = {
-        'id': 1,
+        'id': '1',
         'name': 'jeans',
         'price': 100.0,
         'description': 'this is jeans',

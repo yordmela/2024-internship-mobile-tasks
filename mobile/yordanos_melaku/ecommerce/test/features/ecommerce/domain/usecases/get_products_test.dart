@@ -21,8 +21,8 @@ void main(){
   });
 
   final tProductList=[
- const Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s'),
- const Product(id: 1, name: 'this', price: 100, description: 'this is this', imageUrl: '../s')
+ const Product(id: '1', name: 'this', price: 100, description: 'this is this', imageUrl: '../s'),
+ const Product(id: '1', name: 'this', price: 100, description: 'this is this', imageUrl: '../s')
 
   ];
 

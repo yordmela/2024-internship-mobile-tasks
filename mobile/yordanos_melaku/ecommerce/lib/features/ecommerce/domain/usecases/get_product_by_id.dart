@@ -5,7 +5,7 @@ import '../entities/product.dart';
 import '../repositories/product_repository.dart';
 import '../../../../core/usecase.dart';
 
-class GetProductById extends Usecase<Product, int> {
+class GetProductById extends Usecase<Product, String> {
   final ProductRepository repository;
 
   GetProductById(this.repository);

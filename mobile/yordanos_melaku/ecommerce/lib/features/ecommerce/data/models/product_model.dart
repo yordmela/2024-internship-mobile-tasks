@@ -2,7 +2,7 @@ import '../../domain/entities/product.dart';
 
 class ProductModel extends Product {
   ProductModel(
-      {required int id,
+      {required String id,
       required String name,
       required double price,
       required String description,
@@ -31,4 +31,13 @@ class ProductModel extends Product {
       'imageUrl': imageUrl
     };
   }
+  Product toProduct() {
+  return Product(
+    id: id,
+    name: name,
+    price: price,
+    description: description,
+    imageUrl: imageUrl,
+  );
+}
 }
