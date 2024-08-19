@@ -3,8 +3,10 @@ import 'features/ecommerce/presentation/pages/add_page.dart';
 import 'features/ecommerce/presentation/pages/details_page.dart';
 import 'features/ecommerce/presentation/pages/home_page.dart';
 import 'features/ecommerce/presentation/pages/search_page.dart';
+import 'injection_container.dart' as di;
 
-void main() {
+void main() async{
+  await di.init();
   runApp(const MyApp());
 }
 
