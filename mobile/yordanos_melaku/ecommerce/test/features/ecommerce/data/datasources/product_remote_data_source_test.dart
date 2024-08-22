@@ -27,15 +27,14 @@ void main() {
     mockHttpClient = MockClient();
     dataSource = ProductRemoteDataSourceImpl(client: mockHttpClient);
   });
-  final tProductModelList =
-      (json.decode(fixture('product_cached.json')) as List)
-          .map((jsonitem) => ProductModel.fromJson(jsonitem))
-          .toList();
+  final tProductModelList = (json.decode(fixture('product_cached.json'))['data'] as List)
+      .map((jsonItem) => ProductModel.fromJson(jsonItem))
+      .toList();
 
   final tProductModel =
       ProductModel.fromJson(json.decode(fixture('product.json')));
   final uri=Uri.parse(
-              'https://documenter.getpostman.com/view/24515281/2sA3XPBgv5');
+              'https://g5-flutter-learning-path-be.onrender.com/api/v1/products');
 
   final tId = '1';
   group('getProducts', () {
@@ -85,7 +84,7 @@ void main() {
       //assert
       verify(mockHttpClient.get(
           Uri.parse(
-              'https://documenter.getpostman.com/view/24515281/2sA3XPBgv5'),
+              'https://g5-flutter-learning-path-be.onrender.com/api/v1/products'),
           headers: {'Content-Type': 'application/json'}));
     });
 
@@ -123,16 +122,19 @@ void main() {
       'should preform a PUT request on a URL with number being the endpoint and with application/json header',
       () {
     //arrange
-     when(mockHttpClient.put(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response(fixture('product.json'), 200));
+    when(mockHttpClient.put(
+  any,
+  headers: anyNamed('headers'),
+  body: anyNamed('body')
+)).thenAnswer((_) async => http.Response(json.encode({'data': tProductModel.toJson()}), 200));
+
+
+    
     //act
     dataSource.updateProduct(tProductModel);
     //assert
     verify(mockHttpClient.put(
-      Uri.parse('https://documenter.getpostman.com/view/24515281/2sA3XPBgv5'),
+      Uri.parse('https://g5-flutter-learning-path-be.onrender.com/api/v1/products/${tId}'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(tProductModel.toJson()),
     ));
@@ -141,11 +143,12 @@ void main() {
   test('should return updated product when the response code is 200 (success)',
       () async {
     //arrange
-    when(mockHttpClient.put(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response(fixture('product.json'), 200));
+when(mockHttpClient.put(
+  any,
+  headers: anyNamed('headers'),
+  body: anyNamed('body')
+)).thenAnswer((_) async => http.Response(json.encode({'data': tProductModel.toJson()}), 200));
+
     //act
     final result = await dataSource.updateProduct(tProductModel);
     //assert
@@ -175,14 +178,14 @@ group('deleteProduct', () {
     when(mockHttpClient.delete(
       any,
       headers: anyNamed('headers'),
-    )).thenAnswer((_) async => http.Response('', 200));
+    )).thenAnswer((_) async => http.Response(json.encode({'data': tProductModel.toJson()}), 200));
 
     // Act
     await dataSource.deleteProduct(tId);
 
     // Assert
     verify(mockHttpClient.delete(
-      Uri.parse('https://yourapiurl.com/products/$tId'),
+      Uri.parse('https://g5-flutter-learning-path-be.onrender.com/api/v1/products/$tId'),
       headers: {'Content-Type': 'application/json'},
     ));
   });
@@ -203,55 +206,45 @@ group('deleteProduct', () {
 });
 
  group('insertProduct', () {
-  final tProductModel = ProductModel(
-   id: '1',
-    name: 'jeans',
-    price: 100,
-    description: 'this is jeans',
-    imageUrl: '../assets/bag.jpg',
-  );
+    test(
+      'should perform a POST request on a URL with the product and return the created product when the response code is 201 (success)',
+      () async {
+        // Arrange
+        final mockStreamedResponse = http.StreamedResponse(
+          Stream.fromIterable([
+            utf8.encode(json.encode({'data': tProductModel.toJson()}))
+          ]),
+          201,
+        );
 
-  test(
-    'should perform a POST request on a URL with the product and return the created product when the response code is 201 (success)',
-    () async {
-      // Arrange
-      when(mockHttpClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response(fixture('product.json'), 201));
+        when(mockHttpClient.send(any)).thenAnswer((_) async => mockStreamedResponse);
 
-      // Act
-      final result = await dataSource.insertProduct(tProductModel);
+        // Act
+        final result = await dataSource.insertProduct(tProductModel);
 
-      // Assert
-      verify(mockHttpClient.post(
-        Uri.parse('https://yourapiurl.com/products'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(tProductModel.toJson()),
-      ));
-      expect(result, equals(tProductModel));
-    },
-  );
+        // Assert
+        expect(result, equals(tProductModel));
+      },
+    );
 
-  test(
-    'should throw ServerException when the response code is not 201',
-    () async {
-      // Arrange
-      when(mockHttpClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response('Something went wrong', 400));
+    test(
+      'should throw ServerException when the response code is not 201',
+      () async {
+        // Arrange
+        final mockStreamedResponse = http.StreamedResponse(
+          Stream.fromIterable([utf8.encode('Something went wrong')]),
+          400,
+        );
 
-      // Act
-      final call = dataSource.insertProduct;
+        when(mockHttpClient.send(any)).thenAnswer((_) async => mockStreamedResponse);
 
-      // Assert
-      expect(() => call(tProductModel), throwsA(const TypeMatcher<ServerException>()));
-    },
-  );
-});
+        // Act
+        final call = dataSource.insertProduct;
 
+        // Assert
+        expect(() => call(tProductModel), throwsA(const TypeMatcher<ServerException>()));
+      },
+    );
+  });
 
 }

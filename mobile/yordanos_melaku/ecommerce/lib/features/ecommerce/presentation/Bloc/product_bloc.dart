@@ -26,9 +26,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadAllProductEvent>((event, emit) async {
       emit(LoadingState());
       final result = await getAllProducts.execute(NoParams());
+      print(result);
+      
       result.fold(
         (failure) => emit(ErrorState(message: 'Error')),
-        (products) => emit(LoadedAllProductState(products: products)),
+        (products) {
+          emit(LoadedAllProductState(products: products));
+          print('Fetched products after deletion: ${products.length}');
+
+        },
       );
     });
 
@@ -36,28 +42,30 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(LoadingState());
       final result = await getSingleProduct.execute(event.productId);
       result.fold((failure) => emit(ErrorState(message: 'Error')),
-          (product) => emit(LoadedSingleProductState(product:product)));
+          (product) => emit(LoadedSingleProductState(product: product)));
     });
 
     on<InsertProductEvent>((event, emit) async {
       emit(LoadingState());
       final result = await insertProduct.execute(event.product);
       result.fold((failure) => emit(ErrorState(message: 'Error')),
-          (product) => emit(InsertedProductState(product:product)));
+          (product) => emit(InsertedProductState(product: product)));
     });
 
     on<UpdateProductEvent>((event, emit) async {
       emit(LoadingState());
       final result = await updateProduct.execute(event.product);
       result.fold((failure) => emit(ErrorState(message: 'Error')),
-          (product) => emit(UpdatedProductState(product:product)));
+          (product) => emit(UpdatedProductState(product: product)));
     });
 
     on<DeleteProductEvent>((event, emit) async {
       emit(LoadingState());
       final result = await deleteProduct.execute(event.productId);
-      result.fold((failure) => emit(ErrorState(message: 'Error')),
-          (product) => emit(DeletedProductState()));
+      result.fold((failure) => emit(ErrorState(message: 'Error')), (product) {
+        emit(DeletedProductState());
+        add(LoadAllProductEvent());
+      });
     });
   }
 }

@@ -1,4 +1,5 @@
-[
+{
+  "data": [
     {
       "id": "1",
       "name": "Product 1",
@@ -14,4 +15,4 @@
       "imageUrl": "url_to_image_2"
     }
   ]
-  
+}
