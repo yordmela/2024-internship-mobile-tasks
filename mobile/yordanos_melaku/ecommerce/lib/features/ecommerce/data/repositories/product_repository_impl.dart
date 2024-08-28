@@ -20,11 +20,9 @@ class ProductRepositoryImpl extends ProductRepository {
 
   @override
   Future<Either<Failure, List<Product>>> getProducts() async {
-    print(await networkInfo.isConnected);
     if (await networkInfo.isConnected) {
       try {
         final remoteProduct = await remoteDataSource.getProducts();
-        print(remoteProduct);
         localDataSource.cachProducts(remoteProduct);
         return Right(remoteProduct);
       } on ServerException {

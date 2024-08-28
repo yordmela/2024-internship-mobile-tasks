@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../injection_container.dart' as di;
+import '../../../authentication/presentation/Bloc/auth_bloc.dart';
+import '../../../authentication/presentation/Bloc/auth_event.dart';
+import '../../../authentication/presentation/Bloc/auth_state.dart';
 import '../../domain/entities/product.dart';
 import '../Bloc/product_bloc.dart';
 import '../Bloc/product_event.dart';
@@ -87,8 +90,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => di.sl<ProductBloc>()..add(LoadAllProductEvent()),
+    return MultiBlocProvider(
+      providers: [
+          BlocProvider<ProductBloc>(
+      create: (_) => di.sl<ProductBloc>()..add(LoadAllProductEvent()),),
+
+      BlocProvider<AuthBloc>(
+      create: (_) => di.sl<AuthBloc>()..add(GetUserEvent()),),
+      ],
+      
       child: Scaffold(
           body: Container(
               padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
@@ -119,20 +129,32 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.w100,
                                         color: const Color.fromARGB(
                                             255, 172, 169, 169))),
-                                Row(
+                                BlocBuilder<AuthBloc,AuthState>(builder: (context, state) {
+                                  if(state is AuthLoading){
+                                    return const CircularProgressIndicator();
+                                  }else if (state is UserLoaded){
+                                      return   Row(
                                   children: [
                                     Text(
                                       'Hello, ',
                                       style: GoogleFonts.sora(fontSize: 15),
                                     ),
                                     Text(
-                                      'Yohannes',
+                                      state.user.name,
                                       style: GoogleFonts.sora(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
                                     ),
                                   ],
-                                ),
+                                );
+                                  }else if(state is UserLoadFailure ){
+                                    return Text(state.message, style: const TextStyle(color: Colors.red),);
+                                  }
+                                  return const Text('Welcome');
+                                }
+                                
+                                )
+                               
                               ],
                             ),
                           ],

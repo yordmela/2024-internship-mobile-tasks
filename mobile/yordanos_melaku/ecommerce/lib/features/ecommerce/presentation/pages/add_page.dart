@@ -96,33 +96,34 @@ class _AddPageState extends State<AddPage> {
                                 onTap: () async {
                                   pickImage();
                                 },
-                                child:_filePath==null?
-                                ( Container(
-                                    padding: const EdgeInsets.all(50),
-                                    width: double.infinity,
-                                    height: 190,
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 240, 240, 240),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Column(
-                                      children: [
-                                        const Icon(Icons.image, size: 48),
-                                        const SizedBox(height: 10),
-                                        Text('upload image',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500))
-                                      ],
-                                    ))):
-                                   SizedBox(
-                                width: double.infinity,
-                                height: 190,
-                                child: Image.file(File(_filePath!)
-                                 , fit: BoxFit.cover,
-                                )) 
-                              )),
+                                child: _filePath == null
+                                    ? (Container(
+                                        padding: const EdgeInsets.all(50),
+                                        width: double.infinity,
+                                        height: 190,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 240, 240, 240),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Column(
+                                          children: [
+                                            const Icon(Icons.image, size: 48),
+                                            const SizedBox(height: 10),
+                                            Text('upload image',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500))
+                                          ],
+                                        )))
+                                    : SizedBox(
+                                        width: double.infinity,
+                                        height: 190,
+                                        child: Image.file(
+                                          File(_filePath!),
+                                          fit: BoxFit.cover,
+                                        )))),
                     const SizedBox(height: 20),
                     Text('name',
                         style: GoogleFonts.poppins(
@@ -211,11 +212,15 @@ class _AddPageState extends State<AddPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          final ProductModel newProduct=ProductModel(id: product?.id ?? '', name: _nameController.text, price: double.parse(_priceController.text), description: _descriptionController.text, imageUrl: _filePath ?? '');
-                          if(isUpdateMode){
+                          final ProductModel newProduct = ProductModel(
+                              id: product?.id ?? '',
+                              name: _nameController.text,
+                              price: double.parse(_priceController.text),
+                              description: _descriptionController.text,
+                              imageUrl: _filePath ?? '');
+                          if (isUpdateMode) {
                             productBloc.add(UpdateProductEvent(newProduct));
-                            
-                          }else{
+                          } else {
                             productBloc.add(InsertProductEvent(newProduct));
                           }
                           Navigator.pushNamed(context, '/');
@@ -227,8 +232,7 @@ class _AddPageState extends State<AddPage> {
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
-                                
-                        child: Text((isUpdateMode)? 'EDIT': 'ADD'),
+                        child: Text((isUpdateMode) ? 'EDIT' : 'ADD'),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -236,8 +240,9 @@ class _AddPageState extends State<AddPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => {
-                        if (isUpdateMode)  {productBloc.add(DeleteProductEvent(product.id))},
-                        Navigator.pushNamed(context, '/')
+                          if (isUpdateMode)
+                            {productBloc.add(DeleteProductEvent(product.id))},
+                          Navigator.pushNamed(context, '/')
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(200, 50),
@@ -254,4 +259,3 @@ class _AddPageState extends State<AddPage> {
                 ))));
   }
 }
-
